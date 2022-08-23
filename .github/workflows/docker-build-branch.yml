@@ -38,7 +38,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ GITHUB_SHA::7 }}
+            type=raw,value=${{ ${GITHUB_SHA::7} }}
 
       - name: Build container
         uses: docker/build-push-action@v3
