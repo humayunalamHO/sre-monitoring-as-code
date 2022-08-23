@@ -68,7 +68,7 @@ jobs:
             run: |
                 pwd
                 ls /mixin-defs
-#                sh run-mixin.sh -m monitoring -rd -i mixin-defs -o mixin-defs
+
                 echo "after script"
                 pwd
               #
