@@ -34,7 +34,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ github.event.pull_request.head.sha }}
+            type=raw,value=${{ github.event.base_ref }}
 
       - name: Build container
         uses: docker/build-push-action@v3
