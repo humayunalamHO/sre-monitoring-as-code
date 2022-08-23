@@ -66,5 +66,5 @@ jobs:
             image: ${{ steps.meta.outputs.tags }}
             options: -v ${{ github.workspace }}:/mixin-defs
             run: |
-                ls -l
-                pwd
+                sh run-mixin.sh -m monitoring -rd -i mixin-defs -o mixin-defs
+              #
