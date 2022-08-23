@@ -58,6 +58,13 @@ jobs:
 
           
 
-      - name: Run deploy script
-        run: docker run --mount type=bind,source="$PWD"/output,target=/output --mount type=bind,source="$PWD"/mixin-defs,target=/input -it ${{ steps.meta.outputs.tags }} -m monitoring -rd -i input -o output
-##
+#      - name: Run deploy script
+#        run: docker run -v "$PWD"/output,target=/output --mount type=bind,source="$PWD"/mixin-defs,target=/input -it ${{ steps.meta.outputs.tags }} -m monitoring -rd -i input -o output
+      - name: Run the build process with Docker
+            uses: addnab/docker-run-action@v3
+            with:
+                image: ${{ steps.meta.outputs.tags }}
+                options: -v ${{ github.workspace }}:/mixin-defs
+                run: |
+                    ls -l
+                    pwd
