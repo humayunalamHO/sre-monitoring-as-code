@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: owasp/zap2docker-stable
-      options: -v /__w/actions-test-repo/actions-test-repo:/zap/wrk/:rw
+      options: -v ${{ github.workspace }}:/data:rw
     steps:
       - uses: actions/checkout@v2
       - name: run zap
