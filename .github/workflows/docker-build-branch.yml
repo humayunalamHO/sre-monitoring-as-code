@@ -50,3 +50,4 @@ jobs:
 
       - name: Run deploy script
         run: docker run --mount type=bind,source="$PWD"/output,target=/output --mount type=bind,source="$PWD"/mixin-defs,target=/input -it sre-monitoring-as-code:latest -m monitoring -rd -i input -o output
+#
