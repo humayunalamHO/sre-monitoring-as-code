@@ -70,4 +70,6 @@ jobs:
                 echo ""
                 echo "after script"
                 ls -l /data/monitoring-as-code/mixin-defs
+                echo "everything"
+                ls -ltr /data/monitoring-as-code/mixin-defs/*
               #
