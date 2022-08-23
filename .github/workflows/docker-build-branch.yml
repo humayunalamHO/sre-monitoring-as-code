@@ -29,8 +29,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
 
-      - name: Step
-        run: echo ${github.sha}         
+#      - name: Step
+#        run: echo ${{ github.sha }}         
 
       - name: Calculate metadata
         id: meta
