@@ -66,10 +66,8 @@ jobs:
             image: ${{ steps.meta.outputs.tags }}
             options: -v ${{ github.workspace }}:/data
             run: |
-                sh run-mixin.sh -m monitoring -rd -i /data/monitoring-as-code/mixin-defs -o /data/monitoring-as-code/mixin-defs
-                echo ""
-                echo "after script"
-                ls -l /data/monitoring-as-code/mixin-defs
-                echo "everything"
-                ls -ltr /data/monitoring-as-code/mixin-defs/*
-              #
+                which curl
+                which wget
+                VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-) &&  \
+                wget -qO- "https://github.com/prometheus/prometheus/releases/download/v${VERSION}/prometheus-$VERSION.linux-amd64.tar.gz" \
+                | tar xvzf - "prometheus-$VERSION.linux-amd64"/promtool --strip-components=1 && cp promtool /go/bin/promtool
