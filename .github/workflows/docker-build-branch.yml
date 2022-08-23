@@ -64,10 +64,10 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
             image: ${{ steps.meta.outputs.tags }}
-            options: -v ${{ github.workspace }}:/mixin-defs
+            options: -v ${{ github.workspace }}:/data
             run: |
                 pwd
-                ls /mixin-defs
+                ls /data/monitoring-as-code/mixin-defs
 
                 echo "after script"
                 pwd
