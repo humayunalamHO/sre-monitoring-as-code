@@ -30,7 +30,7 @@ jobs:
 
 
       - name: Step
-        run: echo ${GITHUB_SHA::7}          
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV          
 
       - name: Calculate metadata
         id: meta
@@ -38,7 +38,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ GITHUB_SHA::7 }}
+            type=raw,value=${SHORT_SHA}
 
       - name: Build container
         uses: docker/build-push-action@v3
