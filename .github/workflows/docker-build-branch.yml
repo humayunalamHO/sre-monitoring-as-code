@@ -14,7 +14,8 @@ jobs:
       packages: write
       security-events: write
     runs-on: ubuntu-latest
-      volumes: ${{ github.workspace }}:/data
+      options: -v ${{ github.workspace }}:/data:rw
+
 #    if: contains(github.event.pull_request.labels.*.name, 'smoketest') == true
     steps:
       #Checks-out our repository under $GITHUB_WORKSPACE, so our workflow can access it.
