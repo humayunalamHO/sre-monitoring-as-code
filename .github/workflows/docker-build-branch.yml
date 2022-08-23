@@ -1,8 +1,6 @@
 name: 'Docker Build Branch'
 
-on:
-  pull_request:
-    types: [ labeled, opened, reopened, synchronize ]
+on: push
 
 env:
   REGISTRY: ghcr.io
@@ -16,7 +14,7 @@ jobs:
       packages: write
       security-events: write
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'smoketest') == true
+#    if: contains(github.event.pull_request.labels.*.name, 'smoketest') == true
     steps:
       #Checks-out our repository under $GITHUB_WORKSPACE, so our workflow can access it.
       - name: Checkout
@@ -50,45 +48,5 @@ jobs:
             PACKAGE_TOKEN=${{secrets.GITHUB_TOKEN}}
             MAC_VERSION='#${{ github.event.number }}'
 
-      # Snyk security scan of Docker file only
-      - name: Run Snyk to check Docker file for vulnerabilities
-        id: snyk-dockerfile
-        continue-on-error: true
-        uses: snyk/actions/docker@0.3.0
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ steps.meta.outputs.tags }}
-          args: |
-            --file=./monitoring-as-code/Dockerfile
-            --severity-threshold=medium
-            --sarif-file-output=snyk.sarif
-
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: snyk.sarif
-
-      - name: Check on failures
-        if: steps.snyk-dockerfile.outcome != 'success'
-        run: exit 1
-
-      # Snyk security scan of Built Docker Image and unmanaged dependencies
-      - name: Run Snyk to check Docker image for vulnerabilities
-        id: snyk-image
-        continue-on-error: true
-        uses: snyk/actions/docker@0.3.0
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          image: ${{ steps.meta.outputs.tags }}
-          args: |
-            --app-vulns
-            --severity-threshold=medium
-
-      - name: Check on failures
-        if: steps.snyk-image.outcome != 'success'
-        run: exit 1
-
-      - name: Push image to GitHub Container Registry
-        run: docker push ${{ steps.meta.outputs.tags }}
+      - name: Run deploy script
+        run: docker run --mount type=bind,source="$PWD"/output,target=/output --mount type=bind,source="$PWD"/mixin-defs,target=/input -it sre-monitoring-as-code:latest -m monitoring -rd -i input -o output
