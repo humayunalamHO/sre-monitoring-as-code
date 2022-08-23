@@ -62,6 +62,7 @@ jobs:
 #      - name: Run deploy script
 #        run: docker run -v "$PWD"/output,target=/output --mount type=bind,source="$PWD"/mixin-defs,target=/input -it ${{ steps.meta.outputs.tags }} -m monitoring -rd -i input -o output
       - name: Run the build process with Docker
+        id: vars
         uses: addnab/docker-run-action@v3
         with:
             image: ${{ steps.meta.outputs.tags }}
@@ -76,5 +77,5 @@ jobs:
                 ls -al /data/monitoring-as-code/mixin-defs
 
       - name: Check cosmos config file
-        run: |
-          ls -al /data
+        with:
+          run: ls -lah ${{ steps.vars.outputs./data/monitoring-as-code/mixin-defs }}
