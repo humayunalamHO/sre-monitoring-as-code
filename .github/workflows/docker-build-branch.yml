@@ -28,13 +28,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+
+      - name: Step
+        run: echo ${GITHUB_SHA::7}          
+
       - name: Calculate metadata
         id: meta
         uses: docker/metadata-action@v4
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ github.event.base_ref }}
+            type=raw,value=${GITHUB_SHA::7}
 
       - name: Build container
         uses: docker/build-push-action@v3
