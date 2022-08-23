@@ -66,7 +66,8 @@ jobs:
             image: ${{ steps.meta.outputs.tags }}
             options: -v ${{ github.workspace }}:/mixin-defs
             run: |
-                ls /monitoring-as-code/mixin-defs
+                ls -l
+                ls monitoring-as-code/mixin-defs
                 sh run-mixin.sh -m monitoring -rd -i /mixin-defs -o /mixin-defs
                 echo "after script"
                 pwd
