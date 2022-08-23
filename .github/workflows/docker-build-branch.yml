@@ -30,7 +30,7 @@ jobs:
 
 
       - name: Step
-        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV          
+        run: echo ${github.sha}         
 
       - name: Calculate metadata
         id: meta
@@ -38,7 +38,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${SHORT_SHA}
+            type=raw,value=${{ github.sha }}
 
       - name: Build container
         uses: docker/build-push-action@v3
@@ -60,4 +60,4 @@ jobs:
 
       - name: Run deploy script
         run: docker run --mount type=bind,source="$PWD"/output,target=/output --mount type=bind,source="$PWD"/mixin-defs,target=/input -it $MAC_IMAGE -m monitoring -rd -i input -o output
-#
+##
