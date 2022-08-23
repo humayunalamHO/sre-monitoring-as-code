@@ -25,4 +25,4 @@ COPY mixin-defs /mixin-defs
 COPY run-mixin.sh /
 RUN chmod a+x /usr/local/bin/jb /usr/local/bin/jsonnet /run-mixin.sh
 
-#ENTRYPOINT ["/run-mixin.sh"]
+ENTRYPOINT ["/run-mixin.sh"]

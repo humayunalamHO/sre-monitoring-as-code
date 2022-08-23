@@ -71,3 +71,7 @@ jobs:
                 wget -qO- "https://github.com/prometheus/prometheus/releases/download/v${VERSION}/prometheus-$VERSION.linux-amd64.tar.gz" | tar xvzf - "prometheus-$VERSION.linux-amd64"/promtool --strip-components=1 && cp promtool /usr/local/bin/promtool
                 promtool --version
                 promtool check rules /data/monitoring-as-code/mixin-defs/prometheus-rules/*-alert-rules.yaml /data/monitoring-as-code/mixin-defs/prometheus-rules/*-recording-rules.yaml
+
+      - name: Check cosmos config file
+        run: |
+          ls -al /data/monitoring-as-code/mixin-defs
