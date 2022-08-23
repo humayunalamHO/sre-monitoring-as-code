@@ -54,7 +54,7 @@ jobs:
             MAC_IMAGE=${{ steps.meta.outputs.tags }}
 
       - name: echo mac image
-        run: echo ${{env.MAC_IMAGE}}
+        run: echo ${{ steps.meta.outputs.tags }}
 
           
 
