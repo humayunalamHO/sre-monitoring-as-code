@@ -60,4 +60,4 @@ jobs:
         run: docker build -t sre-promtool ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
 
       - name: Run promtool container
-        run: docker run -it sre-promtool ls -l /data/
+        run: docker run sre-promtool ls -l /data/
