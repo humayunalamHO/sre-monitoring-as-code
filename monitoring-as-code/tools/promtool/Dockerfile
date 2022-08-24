@@ -8,13 +8,6 @@ RUN VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releas
 
 FROM alpine:3.16.1 AS runner
 COPY --from=builder /go/bin/promtool /usr/local/bin
-#RUN mkdir /data
-#COPY *rules.yaml /data/
 
-#FROM alpine:3.8
-#COPY --from=prometheus /bin/promtool /bin/promtool
-#RUN mkdir /data
-#COPY monitoring-localhost-recording-rules.yaml /data/
-#RUN promtool --version 
 ENTRYPOINT [ "/usr/local/bin/promtool" ]
 #CMD [ "promtool" ]

@@ -59,5 +59,8 @@ jobs:
       - name: Build promtool container
         run: docker build -t sre-promtool ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
 
-      - name: Run promtool container
-        run: docker run -v ${GITHUB_WORKSPACE}/monitoring-as-code/output/prometheus-rules:/data sre-promtool check rules /data/*
+      - name: Run monitoring mixin
+        run:  docker run -v ${{ github.workspace }}/monitoring-as-code:${{ github.workspace }}/data -t ${{ steps.meta.outputs.tags }} -m monitoring -rd -i ${{ github.workspace }}/data/mixin-defs -o ${{ github.workspace }}/data/output
+
+      - name: Run promtool checks
+        run: for FILE in ${{ github.workspace }}/monitoring-as-code/output/prometheus-rules/*-rules.yaml; do docker run -v ${{ github.workspace }}/monitoring-as-code:${{ github.workspace }}/data sre-promtool check rules ${{ github.workspace }}/data/output/prometheus-rules/$(basename $FILE); if [ $? -ne 0 ]; then echo "Validation of rules files failed for $(basename $FILE) - exiting"; exit 1; fi done
