@@ -8,7 +8,7 @@ RUN VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releas
 
 FROM alpine:3.16.1 AS runner
 COPY --from=builder /go/bin/promtool /usr/local/bin
-RUN mkdir /data
+#RUN mkdir /data
 #COPY *rules.yaml /data/
 
 #FROM alpine:3.8
