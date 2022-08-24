@@ -1,0 +1,9 @@
+FROM prom/prometheus:latest as prometheus
+
+FROM alpine:3.8
+COPY --from=prometheus /bin/promtool /bin/promtool
+RUN mkdir /data
+COPY monitoring-localhost-recording-rules.yaml /data/
+RUN promtool --version 
+#ENTRYPOINT [ "/bin/promtool" ]
+CMD [ "promtool" ]

@@ -56,15 +56,5 @@ jobs:
 
 #      - name: Run deploy script
 #        run: docker run -v "$PWD"/output,target=/output --mount type=bind,source="$PWD"/mixin-defs,target=/input -it ${{ steps.meta.outputs.tags }} -m monitoring -rd -i input -o output
-      - name: Run the build process with Docker
-        id: vars
-        uses: addnab/docker-run-action@v3
-        with:
-            image: ${{ steps.meta.outputs.tags }}
-            options: -v ${{ github.workspace }}:/data
-            run: |
-                sh run-mixin.sh -m monitoring -rd -i /data/monitoring-as-code/mixin-defs -o /data/monitoring-as-code/mixin-defs
-                VERSION=2.38.0
-                wget -qO- "https://github.com/prometheus/prometheus/releases/download/v${VERSION}/prometheus-$VERSION.linux-amd64.tar.gz" | tar xvzf - "prometheus-$VERSION.linux-amd64"/promtool --strip-components=1 && cp promtool /usr/local/bin/promtool
-                promtool --version
-                promtool check rules /data/monitoring-as-code/mixin-defs/prometheus-rules/*-alert-rules.yaml /data/monitoring-as-code/mixin-defs/prometheus-rules/*-recording-rules.yaml
+      - name: Build promtool container
+        run: docker build -t sre-promtool ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
