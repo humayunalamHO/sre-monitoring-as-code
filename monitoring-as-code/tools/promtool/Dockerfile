@@ -16,5 +16,5 @@ RUN mkdir /data
 #RUN mkdir /data
 #COPY monitoring-localhost-recording-rules.yaml /data/
 #RUN promtool --version 
-#ENTRYPOINT [ "/bin/promtool" ]
+ENTRYPOINT [ "/usr/local/bin/promtool" ]
 #CMD [ "promtool" ]
