@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: sre-promtool
-  USER: humayunalamho
+  USER: ho-cto
 
 jobs:
   publish:
@@ -34,7 +34,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build container
-        run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v3 ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
+        run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v4 ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
 
       - name: Push image to GitHub Container Registry
-        run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v3
+        run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v4
