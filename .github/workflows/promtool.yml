@@ -38,10 +38,10 @@ jobs:
       - name: Add SHORT_SHA env property with commit short sha
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
 
-
-
       - name: Build container
         run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${SHORT_SHA} ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
 
       - name: Push image to GitHub Container Registry
         run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${SHORT_SHA}
+
+####
