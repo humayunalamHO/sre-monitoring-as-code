@@ -37,4 +37,4 @@ jobs:
         run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v2 ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
 
       - name: Push image to GitHub Container Registry
-        run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v2
+        run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:v3
