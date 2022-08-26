@@ -7,7 +7,10 @@ ARG VERSION
 #RUN if [ "$ENV" = "production" ] ; then yarn client:build:prod ; else yarn client:build ; fi
 
 #RUN if [ -z "$VERSION" ] ; then VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-) ; fi 
-RUN if [ -z "$VERSION" ] ; then $VERSION="2.38.0" ; fi
+RUN if [ -z "$VERSION" ] ; then VERSION="2.38.0" ; fi
+RUN export DOWNLOAD_URL=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-) ; 
+RUN echo "download url"
+RUN echo $DOWNLOAD_URL
 
 RUN echo "testing version"
 RUN echo $VERSION
