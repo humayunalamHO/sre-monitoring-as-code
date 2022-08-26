@@ -8,7 +8,7 @@ ARG VERSION
 
 #RUN if [ -z "$VERSION" ] ; then VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-) ; fi 
 COPY prom.sh /tmp/
-RUN chmod u+x /tmp/bash.sh
+RUN chmod u+x /tmp/bash.sh && /tmp/bash.sh
 RUN if [ -z "$VERSION" ] ; then echo "version is empty"; fi
 
 
