@@ -6,7 +6,7 @@ ARG VERSION
 
 #RUN if [ "$ENV" = "production" ] ; then yarn client:build:prod ; else yarn client:build ; fi
 
-RUN if [ -z "$VERSION" ] ; then VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-) ; fi 
+RUN if [ -z "$VERSION" ] ; then RUN VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-) ; fi 
 
 RUN echo "testing version"
 RUN echo $VERSION
