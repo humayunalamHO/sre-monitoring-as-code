@@ -3,6 +3,7 @@ FROM golang:1.19.0-alpine3.15 AS builder
 RUN apk add curl jq
 
 ARG VERSION
+ENV VERSION $VERSION
 RUN VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-)
 #RUN if [ "$ENV" = "production" ] ; then yarn client:build:prod ; else yarn client:build ; fi
 RUN echo $VERSION
