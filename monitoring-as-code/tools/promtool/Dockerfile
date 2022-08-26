@@ -3,14 +3,13 @@ FROM golang:1.19.0-alpine3.15 AS builder
 RUN apk add curl jq
 
 ARG VERSION
-
+RUN VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-)
 #RUN if [ "$ENV" = "production" ] ; then yarn client:build:prod ; else yarn client:build ; fi
 
 #RUN if [ -z "$VERSION" ] ; then VERSION=$(curl -Ls https://api.github.com/repos/prometheus/prometheus/releases/latest | jq ".tag_name" | xargs | cut -c2-) ; fi 
-RUN mkdir /tmp
-COPY prom.sh /tmp/
-RUN chmod u+x /tmp/prom.sh && /tmp/prom.sh
-RUN if [ -z "$VERSION" ] ; then echo "version is empty"; fi
+#COPY prom.sh /tmp/
+#RUN chmod u+x /tmp/prom.sh && /tmp/prom.sh
+#RUN if [ -z "$VERSION" ] ; then echo "version is empty"; fi
 
 
 RUN wget -qO- "https://github.com/prometheus/prometheus/releases/download/v${VERSION}/prometheus-$VERSION.linux-amd64.tar.gz" \
