@@ -12,6 +12,6 @@ FROM alpine:3.16.2 AS runner
 
 COPY --from=builder /go/bin/promtool /usr/local/bin
 
-
+RUN promtool --version
 
 ENTRYPOINT [ "/usr/local/bin/promtool" ]
