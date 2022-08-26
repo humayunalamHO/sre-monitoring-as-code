@@ -7,6 +7,7 @@ on:
         description: Bump Version
         default: v1.0.0
         required: true      
+      
         
 
 env:
@@ -36,9 +37,10 @@ jobs:
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-7`" >> $GITHUB_ENV
 
       - name: Build container
-        run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.version }} ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
+        run: docker build -t ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${SHORT_SHA} --build-arg VERSION=${{ github.event.inputs.version }} ${GITHUB_WORKSPACE}/monitoring-as-code/tools/promtool
 
       - name: Push image to GitHub Container Registry
-        run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.version }}
+        run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${SHORT_SHA}
 
 #1
+#2
