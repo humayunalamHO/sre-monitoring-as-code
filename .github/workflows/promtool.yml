@@ -42,4 +42,3 @@ jobs:
         run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.version }}
 
 #1
-#2
