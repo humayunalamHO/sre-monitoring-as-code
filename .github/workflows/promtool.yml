@@ -34,3 +34,5 @@ jobs:
 
       - name: Push image to GitHub Container Registry
         run: docker push ${{ env.REGISTRY }}/${{ env.USER }}/${{ env.IMAGE_NAME }}:${SHORT_SHA}
+
+#1
